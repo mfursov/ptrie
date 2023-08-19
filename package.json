@@ -1,0 +1,39 @@
+{
+  "name": "ptrie",
+  "description": "Lightweight Path Trie for TypeScript and JavaScript",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf ./dist",
+    "lint": "eslint . --ext .ts",
+    "test": "jest --runInBand",
+    "release": "npm run clean && npm run build && npm run lint && npm run test && rimraf ./dist/tests && npm publish"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint": "^8.47.0",
+    "rimraf": "^5.0.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "trie",
+    "pathtrie",
+    "index"
+  ],
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mfursov/ptrie.git"
+  }
+}
