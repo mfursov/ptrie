@@ -378,6 +378,17 @@ describe('Trie', () => {
             expect(stringNumTrie.get(['1', '2'])).toBe(2);
             expect(stringNumTrie.get(['1', '2', '3'])).toBe(3);
         });
+
+        it('can fill multiple paths', () => {
+            stringNumTrie.fillPath(['a'], () => 1);
+            stringNumTrie.fillPath(['b'], () => 2);
+            expect(stringNumTrie.count()).toBe(3); // A node and 2 children.
+            expect(stringNumTrie.get(['a'])).toBe(1);
+            expect(stringNumTrie.get(['b'])).toBe(2);
+            expect(stringNumTrie.get([])).toBe(2);
+            expect(stringNumTrie.getNode([])?.children.size).toBe(2);
+            expect(stringNumTrie.getNode([])?.childrenWithValue).toBe(2);
+        });
     });
 
     describe('visitDfs', () => {
