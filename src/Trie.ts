@@ -95,13 +95,23 @@ export class Trie<Key = string | number | boolean | bigint, Value = unknown> {
         this._runGc(node.parent);
     }
 
+    /** Clears the trie: remove all nodes from the trie. */
+    clear(): void {
+        this.delete([]);
+    }
+
     /**
      * Returns a count of all child nodes (any depth) with non-undefined
-     * values under the `path` including the node pointed by the path.
+     * values under the `path` including the node pointed by the path if `mode` is `node-and-children`.
+     *
+     * A call with no arguments will return a total count of all values in the trie.
      */
-    count(path: Array<Key> = []): number {
+    count(path: Array<Key> = [], mode: 'node-and-children' | 'children-only' = 'node-and-children'): number {
         const node = this.getNode(path);
-        return node === undefined ? 0 : node.childrenWithValue + (node.value === undefined ? 0 : 1);
+        if (node === undefined) {
+            return 0;
+        }
+        return node.childrenWithValue + (mode === 'node-and-children' && node.value !== undefined ? 1 : 0);
     }
 
     /** Returns true if the trie has no nodes with non-undefined values. */

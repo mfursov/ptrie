@@ -238,6 +238,16 @@ describe('Trie', () => {
         });
     });
 
+    describe('clear', () => {
+        it(`clears whole trie`, () => {
+            numObjTrie.set([], obj1);
+            numObjTrie.set([1, 2], obj2);
+            numObjTrie.clear();
+            expect(numObjTrie.get([])).toBeUndefined();
+            expect(numObjTrie.getNode([])).toBeDefined();
+        });
+    });
+
     describe('count', () => {
         it('returns expected size', () => {
             expect(numObjTrie.count()).toBe(0);
@@ -258,6 +268,31 @@ describe('Trie', () => {
 
             numObjTrie.set([1, 2], undefined);
             expect(numObjTrie.count()).toBe(0);
+        });
+
+        it('supports isNodePointedByPathIncluded flag', () => {
+            expect(numObjTrie.count([], 'node-and-children')).toBe(0);
+            expect(numObjTrie.count([], 'children-only')).toBe(0);
+
+            numObjTrie.set([], obj1);
+            expect(numObjTrie.count([], 'node-and-children')).toBe(1);
+            expect(numObjTrie.count([], 'children-only')).toBe(0);
+
+            numObjTrie.clear();
+            numObjTrie.set([1], obj2);
+            expect(numObjTrie.count([], 'children-only')).toBe(1);
+            expect(numObjTrie.count([], 'node-and-children')).toBe(1);
+            expect(numObjTrie.count([1], 'children-only')).toBe(0);
+            expect(numObjTrie.count([1], 'node-and-children')).toBe(1);
+
+            numObjTrie.clear();
+            numObjTrie.set([1, 2], obj2);
+            expect(numObjTrie.count([], 'children-only')).toBe(1);
+            expect(numObjTrie.count([], 'node-and-children')).toBe(1);
+            expect(numObjTrie.count([1], 'children-only')).toBe(1);
+            expect(numObjTrie.count([1], 'node-and-children')).toBe(1);
+            expect(numObjTrie.count([1, 2], 'children-only')).toBe(0);
+            expect(numObjTrie.count([1, 2], 'node-and-children')).toBe(1);
         });
 
         it('works on sub-path', () => {
